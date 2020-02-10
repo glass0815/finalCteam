@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="house">
+
+	<select id="houselist" resultType="hvo">
+		select hNo , hName ,hTel,hAddr1, decode(hType,'a','호텔','b','모텔','c','캠핑','d','리조트') hType , hTopImg ,hHit from house
+	</select>
+	
+	<select id="room" resultType="roomvo" parameterType="int">
+		select rName, rCount, rPrice, rPeople, rImg, rInfo from room where hNo =#{hNo}
+	</select>
+	
+	<select id="roomCount" resultType="int" parameterType="int">
+		select count(*) from room where hNo=#{hNo}
+	</select>
+</mapper>

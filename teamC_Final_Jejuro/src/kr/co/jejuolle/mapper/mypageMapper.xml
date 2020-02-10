@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mypage">
+
+	<!-- 회원정보 가져오기 -->
+	<select id="selectUserInfo" parameterType="int"
+		resultType="usersvo">
+		select * from users where uno=#{uno}
+	</select>
+
+	<!-- 회원탈퇴 -->
+	<delete id="deleteUser" parameterType="int">
+		delete from users where
+		uno=#{uno}
+	</delete>
+
+	<!-- 회원정보 수정 -->
+	<update id="userInfoUpdate" parameterType="usersvo">
+		update users set
+		uname='#{uName}', ubirth='#{uBirth}', uemail='#{uEmail}',
+		ugender='#{uGender}', uphone='#{uPhone}', uImg='#{uImg}' where
+		uno=${uNo}
+	</update>
+
+	<!-- 비밀번호 변경 -->
+	<update id="pwdUpdate" parameterType="usersvo">
+		update users set
+		upwd='#{uPwd}' where uno=#{uno}
+	</update>
+
+	<!-- 예약 숙소 가져오기 -->
+	<select id="selectReservation" parameterType="int"
+		resultType="reservationvo">
+		select
+		h.hno,h.hname,h.himg1,r.rno,r.rname,r.rprice,rv.startdate,rv.enddate,rv.rvpeople
+		from house h, room r, reservation rv
+		where h.hno=r.hno and r.rno=rv.rno and rv.uno=#{uno}
+	</select>
+	
+	<!-- 찜한 숙소 리스트 -->
+	<resultMap type="hvo" id="houseResult">
+  		<id property="hNo" column="hNo" javaType="int" />
+  		<result property="hName" column="hName"/>
+  		<result property="hType" column="hType"/>
+  		<result property="hTopImg" column="hTopImg"/>
+  		<collection property="housePick" javaType="java.util.List"
+  			resultMap="hpickResult" ofType="hpickvo"/>
+  	</resultMap>
+  	
+  	<resultMap type="hpickvo" id="hpickResult">
+  		<id property="hpNo" column="hpNo" javaType="int"/>
+  		<result property="uNo" column="uNo"/>
+  		<result property="hpDate" column="hpDate"/>
+  	</resultMap>
+  	
+  	<select id="selectHousePick" parameterType="int" resultMap="houseResult">
+		select hp.hpno, hp.hno, h.hname, decode(h.hType,'a','호텔','b','모텔','c','캠핑','d','리조트') hType, 
+		h.htopimg, hp.uno, hp.hpdate 
+		from housepick hp, house h where hp.hno=h.hno and hp.uno=#{uNo} 
+	</select>
+</mapper>

@@ -1,0 +1,37 @@
+/*     Table    */
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+  vertical-align: middle; }
+  
+.table > tbody > tr > td, .table > tbody > tr > th {
+  padding: 8px; }
+  
+.table > tfoot > tr > td, .table > tfoot > tr > th {
+  padding: 8px; }
+  
+.table thead th {
+  border-bottom-width: 2px;
+  font-weight: 600; }
+  
+.table td, .table th {
+  font-size: 14px;
+  border-top-width: 0px;
+  border-bottom: 1px solid;
+  border-color: #ebedf2 !important;
+  padding: 0 25px !important;
+  height: 60px;
+  vertical-align: middle !important; 
+  text-align: center;}
+  
+ .box{
+	width:100%;
+	min-height:168px;
+	border:1px solid #e5e5e5;
+	background:white;
+	padding:9px;
+	margin-bottom:10px;
+	/* height: 190px; */
+}
+
+.cursor{
+	cursor: pointer;
+}
