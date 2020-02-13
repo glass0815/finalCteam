@@ -144,6 +144,7 @@ public class MyPage_Controller {
 	@RequestMapping("/deleteMyHouseReview")
 	public String deleteMyHouseReview(int hrno, HttpSession session) {
 		dao.deleteHouseReview(hrno);
+		System.out.println("ddddd");
 		int uno = (int) session.getAttribute("uNo");
 		return "redirect:myReview?uno="+uno;
 	}
