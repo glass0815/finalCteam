@@ -2,27 +2,29 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 <style>
- input.img-button {
-        background: url( "resources/img/kakaopay.jpg" ) no-repeat;
-        border: none;
-        margin-left:25%;
-        width: 344px;
-        height: 144px;
-        cursor: pointer;
-      }
+input.img-button {
+	background: url( "resources/img/kakaopay.jpg" ) no-repeat;
+	border: none;
+	margin-left: 25%;
+	width: 344px;
+	height: 144px;
+	cursor: pointer;
+}
 </style>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
-$(function() {
-	$('#kakao').click(function () {
-		console.log("kakao")
-		var url = "https://developers.kakao.com/payment/index#%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%8E%98%EC%9D%B4";
-		var name = "test";
-		var option =  "width = 500, height = 500, top = 100, left = 200, location = no";
-		window.open(url,name,option);
+	$(function() {
+		$('#kakao')
+				.click(
+						function() {
+							console.log("kakao")
+							var url = "https://developers.kakao.com/payment/index#%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%8E%98%EC%9D%B4";
+							var name = "test";
+							var option = "width = 500, height = 500, top = 100, left = 200, location = no";
+							window.open(url, name, option);
+						});
+
 	});
-	  
-});
 </script>
 <section class="post-wrapper-top">
 	<div class="container">
@@ -41,23 +43,44 @@ $(function() {
 	<div class="container clearfix" style="margin-left: 30%">
 		<div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix">
 
+			<h5 class="title">예약자 정보</h5>
+
+			<form id="personalinfo" action="" name="personalinfo" method="post">
+				<label for="lname">예약자 성함<span class="required">*</span>
+				</label> <input type="text" name="lname" id="lname" class="form-control"
+					placeholder="${sessionScope.uName}"> <label for="email">예약자
+					이메일 주소 </label> <input type="text" name="name" id="email"
+					class="form-control" placeholder="${sessionScope.uEmail}">
+				<label for="lname">시작일자<span class="required">*</span>
+				</label> <input type="text" name="lname" id="lname" class="form-control"
+					placeholder="${rlist.startDate }"> <label for="lname">종료일자
+					<span class="required">*</span>
+				</label> <input type="text" name="lname" id="lname" class="form-control"
+					placeholder="${rlist.endDate }">
+			</form>
+
+			<div class="clearfix"></div>
+			<div class="divider"></div>
+
+			<h5 class="title">예약 내용</h5>
 			<table class="table table-striped checkout" data-effect="fade">
 				<thead>
 					<tr>
+						<th>숙박 장소</th>
 						<th>룸 정보</th>
 						<th>룸 가격</th>
 						<th>인원수</th>
-						<th>Actions</th>
+						<th>숙박일수</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td><img width="50" src="resources/img/recent_post_01.png"
-							alt=""> <a href="#">룸 이름</a></td>
-						<td>$18.00</td>
-						<td><input id="verify" class="form-control quantity"
-							type="text" value="1" name=""></td>
-						<td><a class="remove" href="#" title="Remove this item"></a></td>
+						<td><img  src="resources/img/room/${rlist.rImg }"
+							alt="" style="width: 100px">XX</td>
+						<td>${rlist.rName }</td>
+						<td>${rlist.rPrice }</td>
+						<td>${rlist.rvPeople }</td>
+						<td>${sessionScope.day}(일)</td>
 					</tr>
 				</tbody>
 			</table>
@@ -66,9 +89,8 @@ $(function() {
 			<div class="clearfix"></div>
 
 			<div class="well text-right">
-				<strong>TOTAL: $18.00</strong>
+				<strong>TOTAL: ${sessionScope.want}(원)</strong>
 			</div>
-
 			<div class="clearfix"></div>
 
 
@@ -76,23 +98,9 @@ $(function() {
 			<div class="clearfix"></div>
 			<div class="divider"></div>
 
-			<h5 class="title">PERSONAL INFORMATION</h5>
 
-			<form id="personalinfo" action="" name="personalinfo" method="post">
-				<label for="email">Email Address <span class="required">*</span></label>
-				<input type="text" name="name" id="email" class="form-control"
-					placeholder="example@yoursite.com"> <label for="fname">First
-					Name <span class="required">*</span>
-				</label> <input type="text" name="fname" id="fname" class="form-control"
-					placeholder="John"> <label for="lname">Last Name </label> <input
-					type="text" name="lname" id="lname" class="form-control"
-					placeholder="DOE">
-			</form>
 
-			<div class="clearfix"></div>
-			<div class="divider"></div>
-
-			<h5 class="title">CART DETAILS</h5>
+			<h5 class="title">신용카드 결제</h5>
 
 			<form id="cartinfo" action="" name="cartinfo" method="post">
 				<label for="cardnumber">Card Number <span class="required">*</span></label>
@@ -145,17 +153,21 @@ $(function() {
 						CARD</strong>
 				</label>
 			</div>
-			
-			
+
+
 			<div class="clearfix"></div>
 			<div class="divider"></div>
-			
+
 			<h5 class="title">카카오 결제</h5>
 			<input type="button" id="kakao" class="img-button">
-			
+
 			<div class="clearfix"></div>
 			<div class="divider"></div>
-			<button class="button large btn-block">일반 결제</button>
+			<div style="text-align: center;">
+			<h5 class="title"></h5>
+			<button class="button" >예약취소</button>
+			<button class="button" >결제</button>
+			</div>
 		</div>
 		<!-- end content -->
 	</div>

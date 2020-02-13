@@ -5,25 +5,22 @@ import java.util.List;
 public class HouseVO {
 
 	private String hName,hInfo,hTel,hAddr1,hAddr2,hTopImg,hImg1,hImg2,hImg3,hImg4,hEvidence,hType;
-	private int hNo,hmNo,hPostNum,hHit,hStatus,likes,picks;
-
+	private int hNo,hmNo,hPostNum,hHit,hStatus,hlikes,hpicks;
 	private List<HousePickVO> housePick;
 	private List<RoomVO> roomVO;
-	
 	private String rName;
 	
-	
-	public int getLikes() {
-		return likes;
+	public int getHlikes() {
+		return hlikes;
 	}
-	public void setLikes(int likes) {
-		this.likes = likes;
+	public void setHlikes(int hlikes) {
+		this.hlikes = hlikes;
 	}
-	public int getPicks() {
-		return picks;
+	public int getHpicks() {
+		return hpicks;
 	}
-	public void setPicks(int picks) {
-		this.picks = picks;
+	public void setHpicks(int hpicks) {
+		this.hpicks = hpicks;
 	}
 	public String getrName() {
 		return rName;

@@ -46,11 +46,10 @@ div.mypageMenu.active>a {
 			<%@include file="mypage_menu.jsp"%>
 			<!--end of include menu -->
 			
-			
 			<div class="clear"></div>
 			<div class="row">
 				<div class="content col-lg-12 col-md-12 col-sm-12 clearfix">
-					<h3 class="title">ÂòÇÑ ¼÷¼Ò()</h3>
+					<h3 class="title">ÂòÇÑ ¼÷¼Ò(${fn:length(hpList)})</h3>
 					<c:forEach var="e" items="${hpList}">
 					
 						<div class="box">
@@ -61,7 +60,7 @@ div.mypageMenu.active>a {
 								<img
 									src="./resources/img/house/${e.hTopImg}"
 									alt="" class="box_img"
-									onerror="this./resources/img/house/${e.hTopImg}';">
+									onerror="this./resources/img/house/${e.hTopImg};">
 							</div>
 							<div class="box_inner">
 								<div class="box_inner_top">
@@ -70,28 +69,27 @@ div.mypageMenu.active>a {
 								</div>
 								<div class="box_inner_bottom">
 									<img src="/res/map/marker/100_0.png" alt="" class="box_pin">
-									<div class="bottom_title"><a href="housedetail?hno=${e.hNo}">${e.hName}</a></div>
+									<div class="bottom_title"><a href="housedetail?hNo=${e.hNo}">${e.hName}</a></div>
 									<div class="inner_bottom">
 										<%-- <img src="./resources/img/house/${e.hTopImg}" alt="" onclick="pickHouse_click(${e.hNo})"> --%>
 										<!-- ÂòÇÏ±â °¹¼ö -->
-										<div class="clip_cnt">${e.picks}°³</div>
+										<div class="clip_cnt">${e.hpicks}°³</div>
 										<div class="inner_bottom_line">&nbsp;</div>
 										<!-- ÁÁ¾Æ¿ä °¹¼ö -->
-										<div class="rate_val">${e.likes}°³</div>
+										<div class="rate_val">${e.hlikes}°³</div>
 										<div class="clear"></div>
 									</div>
 									<div class="inner_bottom">
 										<div class="tag">${e.hType}</div>
-										<div class="tag">${e.hpNo}</div>
-										<div class="tag">${e.uNo}</div>
-										<div class="tag">${e.hpDate}</div>
 									</div>
 	
 								</div>
 							</div>
 						</div>
 					</c:forEach>
+					
 				</div>
+				
 			</div>
 		</div>
 		<!-- end content -->
@@ -109,9 +107,6 @@ $(function(){
 	$('.mypageMenu').eq(2).attr('class','col-lg-2 col-md-2 col-sm-2 mypageMenu active');
 });
 
-function pickHouse_click(hno){
-	location.href("housedetail?hno="+hno);
-}
 	
 </script>
 <%@include file="../main/footer.jsp"%>

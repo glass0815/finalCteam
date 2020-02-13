@@ -51,6 +51,7 @@
 				<div class="social_buttons">
 					<!-- 로그인 회원가입 -->
 					<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+					<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 					<c:choose>
 						<c:when test="${sessionScope.uuId == null }">
 							<a href="loginForm" style="float: left; width: 60px">로그인 |</a>&nbsp;&nbsp;
@@ -149,10 +150,10 @@
 										<li><a href="mypage?uno=${sessionScope.uNo}">마이페이지</a>
 											<ul class="dropdown">
 												<li><a href="mypage?uno=${sessionScope.uNo}">나의 여행</a></li>
-												<li><a href="pickTourspot">pick 관광지</a></li>
-												<li><a href="pickhouse">pick 숙소</a></li>
-												<li><a href="reservationHouse">예약 숙소</a></li>
-												<li><a href="myreview">나의 리뷰</a></li>
+												<li><a href="pickTourspot?uno=${sessionScope.uNo}">pick 관광지</a></li>
+												<li><a href="pickhouse?uno=${sessionScope.uNo}">pick 숙소</a></li>
+												<li><a href="reservationHouse?uno=${sessionScope.uNo}">예약 숙소</a></li>
+												<li><a href="myreview?uno=${sessionScope.uNo}">나의 리뷰</a></li>
 												<li><a href="infoModify?uno=${sessionScope.uNo}">정보 수정</a></li>
 											</ul></li>
 									</c:when>

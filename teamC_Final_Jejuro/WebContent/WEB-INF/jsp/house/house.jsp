@@ -33,8 +33,8 @@
         <div class="portfolio-centered">
           <div class="recentitems portfolio">
           
-          			  <c:forEach var="e" items="${list }">
-          			  
+          <c:forEach var="e" items="${list }">
+                     
             <div class="portfolio-item col-lg-6 col-md-6 col-sm-6 col-xs-12 ${e.hType}"><!--<<-여기타입  -->
               <div class="he-wrap tpl6 market-item">
                 <img src="resources/img/house/${e.hTopImg }" style="width: 500px; height: 300px;">

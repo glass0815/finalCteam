@@ -5,11 +5,21 @@ import java.util.List;
 public class TourSpotVO {
 	
 	private String tName,tInfo,tTel,tAddr1,tAddr2,tTopImg,tImg1,tImg2,tImg3,tImg4,tType;
-	private int tNo,tPostNum,tHit;
-	
+	private int tNo,tPostNum,tHit,tlikes,tpicks;
 	private List<TourPickVO> tourPick;
 	
-
+	public int getTlikes() {
+		return tlikes;
+	}
+	public void setTlikes(int tlikes) {
+		this.tlikes = tlikes;
+	}
+	public int getTpicks() {
+		return tpicks;
+	}
+	public void setTpicks(int tpicks) {
+		this.tpicks = tpicks;
+	}
 	public List<TourPickVO> getTourPick() {
 		return tourPick;
 	}

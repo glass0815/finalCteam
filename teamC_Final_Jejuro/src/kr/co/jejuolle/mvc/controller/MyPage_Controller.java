@@ -1,6 +1,9 @@
 package kr.co.jejuolle.mvc.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,8 +12,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.jejuolle.mvc.dao.Mypage_DAO;
 import kr.co.jejuolle.mvc.vo.HousePickVO;
+import kr.co.jejuolle.mvc.vo.HouseReviewVO;
 import kr.co.jejuolle.mvc.vo.HouseVO;
+import kr.co.jejuolle.mvc.vo.QuestionVO;
 import kr.co.jejuolle.mvc.vo.ReservationVO;
+import kr.co.jejuolle.mvc.vo.TourReviewVO;
+import kr.co.jejuolle.mvc.vo.TourSpotVO;
 import kr.co.jejuolle.mvc.vo.UsersVO;
 
 @Controller
@@ -28,16 +35,19 @@ public class MyPage_Controller {
 
 	// pick 관광지
 	@RequestMapping("/pickTourspot")
-	public String pickTourspot() {
-		return "mypage/pickTourspot";
+	public ModelAndView pickTourspot(int uno) {
+		ModelAndView mav = new ModelAndView("mypage/pickTourspot");
+		List<TourSpotVO> tpList = dao.selectTourPick(uno);
+		mav.addObject("tpList", tpList);
+		return mav;
 	}
-
+	
 	// pick 숙소
 	@RequestMapping("/pickhouse")
 	public ModelAndView pickhouse(int uno) {
 		ModelAndView mav = new ModelAndView("mypage/pickHouse");
-		List<HousePickVO> hpList = dao.selectHousePick(uno);
-		mav.addObject("hpList",hpList);
+		List<HouseVO> hpList = dao.selectHousePick(uno);
+		mav.addObject("hpList", hpList);
 		return mav;
 	}
 
@@ -50,12 +60,6 @@ public class MyPage_Controller {
 		return mav;
 	}
 
-	// 나의리뷰
-	@RequestMapping("/myreview")
-	public String myreview() {
-		return "mypage/myReview";
-	}
-
 	// 회원정보 수정페이지 이동
 	@RequestMapping("/infoModify")
 	public ModelAndView infoModify(int uno) {
@@ -66,7 +70,7 @@ public class MyPage_Controller {
 	}
 	
 	//회원정보 수정
-	@RequestMapping("infoUpdate")
+	@RequestMapping("/infoUpdate")
 	public String infoUpdate(UsersVO usersvo) {
 		dao.updateUser(usersvo);
 		System.out.println("수정?");
@@ -100,12 +104,49 @@ public class MyPage_Controller {
 
 	// 나의 문의
 	@RequestMapping("/myQuestion")
-	public ModelAndView myquestion() {
+	public ModelAndView myquestion(int uno) {
 		ModelAndView mav = new ModelAndView("mypage/myquestion");
+		List<QuestionVO> qList = dao.selectMyQuestion(uno);
+		mav.addObject("qList", qList);
 		return mav;
 	}
 	
+	// 나의 리뷰
+	@RequestMapping("/myReview")
+	public ModelAndView myreview(int uno) {
+		ModelAndView mav = new ModelAndView("mypage/myReview");
+		List<HouseReviewVO> hrList = dao.selectMyHouseReivew(uno);
+		List<TourReviewVO> trList = dao.selectMyTourReview(uno);
+		mav.addObject("hrList", hrList);
+		mav.addObject("trList", trList);
+		return mav;
+	}
 	
+	// 나의 문의사항 삭제
+	@RequestMapping("/deleteMyQuestion")
+	public String deleteMyQuestion(int qnum, HttpSession session) {
+		dao.deleteMyQuestion(qnum);
+		int uno = (int) session.getAttribute("uNo");
+		return "redirect:myQuestion?uno="+uno;
+	}
+	
+	// 나의 관광지 리뷰 삭제
+	@RequestMapping("/deleteMyTourReview")
+	public String deleteMyTourReview(int trno, HttpSession session) {
+		
+		System.out.println("asdf : "+trno);
+		dao.deleteTourReview(trno);
+		int uno = (int) session.getAttribute("uNo");
+		return "redirect:myReview?uno="+uno;
+	}
+	
+	// 나의 관광지 리뷰 삭제
+	@RequestMapping("/deleteMyHouseReview")
+	public String deleteMyHouseReview(int hrno, HttpSession session) {
+		dao.deleteHouseReview(hrno);
+		int uno = (int) session.getAttribute("uNo");
+		return "redirect:myReview?uno="+uno;
+	}
 	
 	
 

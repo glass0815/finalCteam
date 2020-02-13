@@ -4,6 +4,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="tourspot">
 	<select id="tourspotlist" resultType="trspotvo">
-		select tNo , tName , tTel  , tAddr1 , tTopImg, tType from tourSpot
+		select tNo , tName , tTel ,
+		tAddr1 , tTopImg, tType, tlikes, tpicks from tourSpot
 	</select>
+	<!-- 관광지 상세보기 -->
+	<select resultType="trspotvo" id="tourspotDetail"
+		parameterType="int">
+		select tNo , tName ,tInfo,tTel,tAddr1,tImg1,tImg2,tImg3,tImg4,
+		decode(tType,'a','자연','b','문화','c','테마','d','올레')tType ,tTopImg,tHit
+		,(select count(*) cnt from tourlike where tNo=#{tNo}) tlikes,(select
+		count(*) cnt from tourpick where tNo=#{tNo}) tpicks from tourspot where
+		tNo=#{tNo}
+	</select>
+
+	<!-- 관광지 좋아요 -->
+	<insert id="tourspotLike" parameterType="trlikevo">
+	insert into tourlike values(tourlike_seq.nextVal,#{tNo},#{uNo},sysdate)
+	</insert>
+
+	<!-- 관광지 좋아요 여부 -->
+	<select resultType="int" id="likecheck" parameterType="trlikevo">
+	select count(*) cnt from tourlike where uNo=#{uNo} and tNo=#{tNo}
+	</select>
+
+	<!-- 관광지 찜하기 -->
+	<insert id="tourspotpick" parameterType="trpickvo">
+	insert into tourpick values(tourpick_seq.nextVal,#{tNo},#{uNo},sysdate)
+	</insert>
+
+	<!-- 관광지 찜하기 여부 -->
+	<select resultType="int" id="pickcheck" parameterType="trpickvo">
+	select count(*) cnt from tourpick where uNo=#{uNo} and tNo=#{tNo}
+	</select>
+
+	<!-- 관광지 조회수 증가 -->
+	<update id="tourHit" parameterType="int">
+	update tourspot set tHit=tHit+1 where tNo=#{tNo}
+	</update>
 </mapper>

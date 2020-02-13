@@ -1,8 +1,11 @@
 package kr.co.jejuolle.mvc.vo;
 
+import java.util.List;
+
 public class AnswerVO {
 	private int anum,qnum;
 	private String Qanswer;
+	
 	public int getAnum() {
 		return anum;
 	}

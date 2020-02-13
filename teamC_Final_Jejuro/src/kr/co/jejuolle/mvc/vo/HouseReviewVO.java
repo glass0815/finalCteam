@@ -1,8 +1,31 @@
 package kr.co.jejuolle.mvc.vo;
 
+import java.util.List;
+
 public class HouseReviewVO {
 	private int hrNo,hNo,uNo,hrPoint;
 	private String hrContent,hrDate;
+	private String hName, hTopImg;
+	private List<HouseVO> houseReview;
+	
+	public List<HouseVO> getHouseReview() {
+		return houseReview;
+	}
+	public void setHouseReview(List<HouseVO> houseReview) {
+		this.houseReview = houseReview;
+	}
+	public String gethTopImg() {
+		return hTopImg;
+	}
+	public void sethTopImg(String hTopImg) {
+		this.hTopImg = hTopImg;
+	}
+	public String gethName() {
+		return hName;
+	}
+	public void sethName(String hName) {
+		this.hName = hName;
+	}
 	public int getHrNo() {
 		return hrNo;
 	}

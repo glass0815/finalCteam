@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <footer class="footer">
 	<div class="container">
 		<div class="widget col-lg-3 col-md-3 col-sm-12">
@@ -38,13 +39,6 @@
 		<div class="widget col-lg-3 col-md-3 col-sm-12">
 			<h4 class="title">Images</h4>
 			<ul class="flickr">
-				<li><a href="#"><img alt="" src="resources/img/sample1.jpg"></a></li>
-				<li><a href="#"><img alt="" src="resources/img/sample2.jpg"></a></li>
-				<li><a href="#"><img alt="" src="resources/img/sample3.jpg"></a></li>
-				<li><a href="#"><img alt="" src="resources/img/sample4.jpg"></a></li>
-				<li><a href="#"><img alt="" src="resources/img/sample5.jpg"></a></li>
-				<li><a href="#"><img alt="" src="resources/img/sample6.jpg"></a></li>
-				<li><a href="#"><img alt="" src="resources/img/sample7.jpg"></a></li>
 			</ul>
 		</div>
 		<!-- end widget -->

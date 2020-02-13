@@ -93,10 +93,10 @@
 			<a href="reservationHouse?uno=${sessionScope.uNo}">예약 숙소</a>
 		</div>
 		<div class="col-lg-2 col-md-2 col-sm-2 mypageMenu">
-			<a href="myreview">나의 리뷰</a>
+			<a href="myReview?uno=${sessionScope.uNo}">나의 리뷰</a>
 		</div>
 		<div class="col-lg-2 col-md-2 col-sm-2 mypageMenu">
-			<a href="myQuestion">나의 문의</a>
+			<a href="myQuestion?uno=${sessionScope.uNo}">나의 문의</a>
 		</div>
 	</div>
 </div>

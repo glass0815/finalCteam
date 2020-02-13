@@ -47,15 +47,69 @@
 				$("#fromDate").datepicker("option", "maxDate", selectedDate);
 			}
 		});
+
+		$('#login').click(function() {
+			if (confirm("로그인이 필요합니다. 로그인페이지로 이동하시겠습니까?") == true) {
+				location.href = "loginForm"
+			} else {
+				return;
+			}
+
+		})
 	});
 </script>
 <!-- 상세보기 버튼 클릭시 문구 사라지는 함수 -->
 <script>
 	$(function() {
-		$('#detail').click(function() {
-			$("#test1").hide();
+		$("#res").click(function() {
+			var aa = $("#test").val();
+			var bb = $("#td4").val();
+			console.log("bb" + bb);
+
+			if (bb == 0) {
+				alert("남은 방수가 없습니다.");
+				return false;
+			} else {
+				$('#rNo').attr("value", aa);
+				$('#people').attr("max", bb);
+			}
 		})
-	})
+
+		$("#detail").click(function detail() {
+			$("#displaydiv").show();
+			$("#test1").hide();
+
+			var aa = $("#test").val();
+			console.log("rNo : " + aa);
+
+			$.ajax({
+				url : "roomdetail?rNo=" + aa,
+				dataType : 'json',
+				success : function(data) {
+					console.log(data);
+					test1 = data.rName;
+					test2 = data.rPrice;
+					test3 = data.rPeople;
+					test4 = data.rImg;
+					test4 = "resources/img/room/" + test4
+					test5 = data.rInfo;
+					test6 = data.rCount;
+					console.log(test1, test2, test3, test4, test5, test6);
+					if (data !== "") {
+						$('#td1').attr("value", test1);
+						$('#td2').attr("value", test2);
+						$('#td3').attr("value", test6);
+						$('#td4').attr("value", test3);
+						$('#td5').attr("value", test5);
+						$('#td0').attr("src", test4);
+						if (test6 == 0) {
+							$("#td3").show().css("color", "red");
+						}
+					}
+				}
+			})
+		});
+	});
 </script>
 <!-- 별점 함수  -->
 <script>
@@ -67,17 +121,58 @@
 		});
 	});
 </script>
-
+<!-- 로그인 체크 후 찜하기 및 좋아요 -->
 <script>
-	$(function() {
-		$("#showbtn").click(function() {
-
-			$("#displaydiv").show();
-		});
-
-	})
+	function loginCheck(uuid) {
+		if (uuid == '') {
+			if (confirm("로그인이 필요합니다. 로그인페이지로 이동하시겠습니까?") == true) {
+				location.href = "loginForm"
+			} else {
+				return;
+			}
+		}
+	}
 </script>
-
+<script>
+	function pick(hNo, val) {
+		var data = {
+			"hNo" : hNo,
+			"val" : val
+		}
+		$.ajax({
+			type : "GET",
+			data : data,
+			url : "houselikepick",
+			success : function(data) {
+				if (data == 1) {
+					alert("이미 찜했습니다.", data);
+				} else {
+					alert("찜하기 성공", data)
+				}
+			}
+		})
+	}
+	function like(hNo, val) {
+		var data = {
+			"hNo" : hNo,
+			"val" : val
+		}
+		$.ajax({
+			type : "GET",
+			data : data,
+			url : "houselikepick",
+			success : function(data) {
+				if (data == 1) {
+					alert("좋아요가 이미 되있습니다.", data);
+					location = 'housedetail?hNo=' + hNo
+				} else {
+					alert("좋아요 성공", data)
+					location = 'housedetail?hNo=' + hNo
+				}
+			}
+		})
+	}
+</script>
 
 <style>
 /*모달위치*/
@@ -184,10 +279,15 @@ ul {
 				<div class="portfolio_details">
 					<div class="details_section">
 						<h2>
-							<a>숙소명</a>
+							<a>${hvo.hName}</a>
 						</h2>
-						<h3>&nbsp;(숙소 종류)</h3>
-						숙소기본정보
+						<br>
+						<h3>
+							&nbsp;&nbsp;숙소유형 :<span>&nbsp;${hvo.hType}</span>
+						</h3>
+						<div>
+							<p></p>
+						</div>
 						<hr>
 						<ul>
 							<li class="version"><span><a href="#">
@@ -201,10 +301,9 @@ ul {
 										</div> <br>
 								</a></span></li>
 							<br>
-							<li class="update">주소 : <span><a href="#"></a> <a
-									href="#"></a></span></li>
+							<li class="update">주소 : <span>${hvo.hAddr1}</span></li>
 
-							<li class="release">전화번호 : <span></span></li>
+							<li class="release">전화번호 : <span>${hvo.hTel}</span></li>
 						</ul>
 					</div>
 				</div>
@@ -212,11 +311,14 @@ ul {
 					<div class="">
 						<br>
 						<div style="margin-left: 10px; font-size: 0.5em;">
-							<i class="fa fa-text1 fa-3x"> 조회수 <a> 999</a></i>
-							&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-text2 fa-3x"> 좋아요 <a>
-									999</a></i>
+							<i class="fa fa-text1 fa-3x"> 조회수 <a>${hvo.hHit}</a></i>
+							&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-text2 fa-3x">좋아요 <a
+								href="javascript:like(${hvo.hNo},1);"
+								onclick="return loginCheck('${sessionScope.uuId}')">${hvo.hlikes}</a></i>
 							<hr>
-							<a class="fa fa-text3 fa-3x">찜하기</a>
+							<a class="fa fa-text3 fa-3x"
+								href="javascript:pick(${hvo.hNo},2);"
+								onclick="return loginCheck('${sessionScope.uuId}')">찜하기</a>
 						</div>
 						<hr>
 						<ul>
@@ -255,7 +357,7 @@ ul {
 				var ps = new kakao.maps.services.Places();
 
 				// 키워드로 장소를 검색합니다
-				ps.keywordSearch('제주특별자치도 제주시 삼도2동 탑동로 66', placesSearchCB);
+				ps.keywordSearch('${hvo.hAddr1}', placesSearchCB);
 
 				// 키워드 검색 완료 시 호출되는 콜백함수 입니다
 				function placesSearchCB(data, status, pagination) {
@@ -390,8 +492,8 @@ ul {
 															<span class="starR1">별5_왼쪽</span> <span class="starR2">별5_오른쪽</span>
 														</div></small>
 											</h4>
-											<p> 글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용 </p> <span
-												class="comment-reply"><a href="#"
+											<p>글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용</p>
+											<span class="comment-reply"><a href="#"
 												class="btn btn-danger">신고</a></span>
 										</div>
 										<div class="comment-content" style="height: 200px">
@@ -406,8 +508,8 @@ ul {
 															<span class="starR1">별5_왼쪽</span> <span class="starR2">별5_오른쪽</span>
 														</div></small>
 											</h4>
-											<p> 글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용 </p> <span
-												class="comment-reply"><a href="#"
+											<p>글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용</p>
+											<span class="comment-reply"><a href="#"
 												class="btn btn-danger">신고</a></span>
 										</div>
 										<div class="comment-content" style="height: 200px">
@@ -422,8 +524,8 @@ ul {
 															<span class="starR1">별5_왼쪽</span> <span class="starR2">별5_오른쪽</span>
 														</div></small>
 											</h4>
-											<p> 글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용 </p> <span
-												class="comment-reply"><a href="#"
+											<p>글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용글내용</p>
+											<span class="comment-reply"><a href="#"
 												class="btn btn-danger">신고</a></span>
 										</div>
 									</li>
@@ -445,59 +547,70 @@ ul {
 						<br>
 						<div style="width: 95%; height: 600px;">
 							<div
-								style=" width: 65%; height: 600px; float: left; box-sizing: border-box">
+								style="width: 65%; height: 600px; float: left; box-sizing: border-box">
 								<!-- 상세보기 버튼클릭시 없어져야하는 부분 -->
 								<h1 id="test1" style="margin-left: 15%;">상세보기버튼을 눌러주세요</h1>
 
 								<div
 									style="display: none; width: 100%; height: 300px; text-align: center; margin-top: 40px;"
 									id="displaydiv">
-									<img src="resources/img/room.jpg"
-										style="width: 300px; height: 200px">
-
+									<img id="td0" src="" style="width: 300px; height: 200px">
 									<table style="width: 100%; height: 100%;">
+										<br>
 										<tr>
 											<td>룸이름</td>
-											<td>룸이름입니다.</td>
+											<td><input type="text" id="td1" disabled="disabled"></td>
 										</tr>
 										<tr>
 											<td>룸가격</td>
-											<td>50000원</td>
+											<td><input type="text" id="td2" disabled="disabled"></td>
 										<tr>
 											<td>남은방개수</td>
-											<td>5개</td>
+											<td><input type="text" id="td3" disabled="disabled"></td>
 										</tr>
 										<tr>
 											<td>최대이용가능인원</td>
-											<td>4명</td>
+											<td><input type="text" id="td4" disabled="disabled"></td>
 										</tr>
 										<tr>
 											<td>방정보</td>
-											<td>ㅁㅇㅁㄴㅇ</td>
+											<td><input type="text" id="td5" disabled="disabled"></td>
+
 										</tr>
 										<tr>
-											<td><input data-toggle="modal" data-target="#myModal2"
-												type="button" id="" value="결제" class="btn btn-warning"
-												style="width: 75px; margin-left: 80%"></td>
+											<c:choose>
+												<c:when test="${sessionScope.uuId != null }">
+													<td><input data-toggle="modal" data-target="#myModal2"
+														type="button" id="res" value="예약하기"
+														class="btn btn-warning"
+														style="width: 100px; margin-left: 80%"></td>
+												</c:when>
+												<c:otherwise>
+													<td><input type="button" id="login" value="로그인"
+														class="btn btn-warning"
+														style="width: 100px; margin-left: 80%"></td>
+												</c:otherwise>
+											</c:choose>
 										</tr>
 									</table>
+									</form>
 								</div>
 							</div>
-							<div
-								style=" width: 35%; float: right; box-sizing: border-box">
+							<div style="width: 35%; float: right; box-sizing: border-box">
 
 								<div style="overflow-y: auto; width: 100%; height: 600px;">
 									<ul>
-									<c:forEach var="e" items="${rlist}">
-										<li id="showbtn"><p>
-												${e.rName} <img src="resources/img/room/${e.rImg }">
-												<%-- <c:forEach var="i" begin="1" end="${cnt}"> --%>
-												 <input data-toggle="modal" type="button" id="detail"
-													value="방 상세보기" class="btn btn-warning"
-													style="width: 100%; height: 20pt;">
+										<c:forEach var="e" items="${rlist}">
+											<li id="showbtn"><p>
+													${e.rName} <img src="resources/img/room/${e.rImg }">
+													<%-- <c:forEach var="i" begin="1" end="${cnt}"> --%>
+													<input data-toggle="modal" type="button" id="detail"
+														onclick="detail();" value="방 상세보기" class="btn btn-warning"
+														style="width: 100%; height: 20pt;">
 													<%-- </c:forEach> --%>
-											</p></li>
-									</c:forEach>
+													<input type="hidden" id="test" value="${e.rNo}">
+												</p></li>
+										</c:forEach>
 									</ul>
 								</div>
 							</div>
@@ -565,35 +678,41 @@ ul {
 
 			<div class="modal-dialog">
 				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">
-							<span aria-hidden="true">×</span><span class="sr-only">Close</span>
-						</button>
-						<h4 class="modal-title" id="myModalLabel"
-							style="text-align: center;">예약하기</h4>
-					</div>
-					<div class="comments_form">
-						<br>
-						<form id="comments_form" action="" name="comments_form"
-							class="row" method="post">
+					<form action="res_room" method="post" autocomplete=off>
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel"
+								style="text-align: center;">예약하기</h4>
+						</div>
+						<div class="comments_form">
+							<br>
 							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"
 								style="position: relative; text-align: center;">
-								오늘 날짜 : <span id="today"></span> <br> <br> <label
-									for="fromDate">시작일&nbsp;</label> <input type="text"
-									name="fromDate" id="fromDate">~ <label for="toDate">종료일&nbsp;</label>
-								<input type="text" name="toDate" id="toDate"> <input
-									type="number" min="1" max="10" step="1" name="number"
-									id="number" class="form-control" placeholder="인원 수를 입력하세요."
-									required="required"
+								<input type="hidden" id="rNo" name="rNo">
+								<table>
+									<tr>
+
+										<td>오늘 날짜 : <span id="today"></span> <br> <label
+											for="fromDate">시작일&nbsp;</label> <input type="text"
+											id="fromDate" name="startDate">~ <label for="toDate">종료일&nbsp;</label>
+											<input type="text" id="toDate" name="endDate"> <br>
+										</td>
+									</tr>
+								</table>
+								<input type="number" id="people" min="1" max="10" step="1"
+									name="rvPeople" id="number" class="form-control"
+									placeholder="인원 수를 입력하세요." required="required"
 									style="width: 200px; left: 0; right: 0; margin-left: auto; margin-right: auto;">
 							</div>
-						</form>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-						<a href="checkout"><button type="button"
-								class="btn btn-primary">등록</button></a>
-					</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">취소</button>
+							<input type="submit" class="btn btn-primary">
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>

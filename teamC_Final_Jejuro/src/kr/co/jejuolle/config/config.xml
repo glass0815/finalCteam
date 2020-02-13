@@ -23,18 +23,20 @@
 		<typeAlias type="kr.co.jejuolle.mvc.vo.RoomVO" alias="roomvo" />
 		<typeAlias type="kr.co.jejuolle.mvc.vo.HrReportVO" alias="hrreportvo" />
 		<typeAlias type="kr.co.jejuolle.mvc.vo.ReservationVO" alias="reservationvo" />
+		<typeAlias type="kr.co.jejuolle.mvc.vo.PaymentVO" alias="paymentvo" />
 		<!-- 로그  -->
 		<typeAlias type="kr.co.jejuolle.mvc.vo.SearchLogVO" alias="searchlogvo" />
 		<typeAlias type="kr.co.jejuolle.mvc.vo.LoginLogVO" alias="loginlogvo" />
-		<!--기타-->
-		<typeAlias type="kr.co.jejuolle.mvc.vo.AnswerVO" alias="answervo" />
-		<typeAlias type="kr.co.jejuolle.mvc.vo.MyplanVO" alias="myplanvo" />
-		<typeAlias type="kr.co.jejuolle.mvc.vo.NoticeVO" alias="noticevo" />
-		<typeAlias type="kr.co.jejuolle.mvc.vo.PaymentVO" alias="paymentvo" />
-		<typeAlias type="kr.co.jejuolle.mvc.vo.QuestionVO" alias="questionvo" />
-		<typeAlias type="kr.co.jejuolle.mvc.vo.CodeMasterVO" alias="cmvo" />
-		<typeAlias type="kr.co.jejuolle.mvc.vo.PlanMoneyVO" alias="pmvo" />
 		<typeAlias type="kr.co.jejuolle.mvc.vo.RvTourlistlogVO" alias="rvtvo"/>
 		<typeAlias type="kr.co.jejuolle.mvc.vo.TourCountVO" alias="rvtcountvo"/>
+		<typeAlias type="kr.co.jejuolle.mvc.vo.LatestTourspot" alias="ltsvo"/>
+		<!-- 여행플랜 -->
+		<typeAlias type="kr.co.jejuolle.mvc.vo.MyplanVO" alias="myplanvo" />
+		<typeAlias type="kr.co.jejuolle.mvc.vo.PlanMoneyVO" alias="pmvo" />
+		<!--기타-->
+		<typeAlias type="kr.co.jejuolle.mvc.vo.AnswerVO" alias="answervo" />
+		<typeAlias type="kr.co.jejuolle.mvc.vo.NoticeVO" alias="noticevo" />
+		<typeAlias type="kr.co.jejuolle.mvc.vo.QuestionVO" alias="questionvo" />
+		
 	</typeAliases>
 </configuration> 

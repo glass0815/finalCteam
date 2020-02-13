@@ -3,6 +3,7 @@ package kr.co.jejuolle.mvc.vo;
 public class HousePickVO {
 	private int hpNo,hNo,uNo;
 	private String hpDate;
+	
 	public int getHpNo() {
 		return hpNo;
 	}

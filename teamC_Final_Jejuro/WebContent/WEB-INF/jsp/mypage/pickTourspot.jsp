@@ -46,44 +46,46 @@ div.mypageMenu.active>a{
 			<%@include file="mypage_menu.jsp"%>
 			<!--end of include menu -->
 			
-			
+			<div class="clear"></div>
+			<div class="row">
 			<div class="content col-lg-12 col-md-12 col-sm-12 clearfix">
-				<h3 class="title">찜한 관광지(1)</h3>
-				<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-					<div class="box">
-						<div class="clear">&nbsp;</div>
-						<div class="img_box"
-							onclick="window.open('/ko/city/istanbul_202/attraction/blue-mosque-sultan-ahmet-camii_3868');"
-							style="cursor: pointer; margin-top: 1px;">
-							<img
-								src="http://img.earthtory.com/img/place_img/202/3868_0_et.jpg"
-								alt="" class="box_img"
-								onerror="this.src='/res/img/common/no_img/sight.png';">
-						</div>
-						<div class="box_inner">
-							<div class="box_inner_bottom">
-								<img src="/res/map/marker/301_0.png" alt="" class="box_pin">
-								<div class="bottom_title"
-									onclick="window.open('/ko/city/istanbul_202/attraction/blue-mosque-sultan-ahmet-camii_3868');">블루
-									모스크(술탄아흐메트 모스...</div>
-								<div class="inner_bottom">
-									<div class="clip_cnt">683</div>
-									<div class="inner_bottom_line">&nbsp;</div>
-									<div class="rate_val">9.0</div>
-									<a href="undefined" target="_blank" class="btn_map"
-										style="display: none">지도</a>
-									<div class="clear"></div>
-								</div>
-								<div class="inner_bottom">
-									<div class="tag">랜드마크</div>
-									<div class="tag">절/신사/사원</div>
-									<div class="clear">&nbsp;</div>
+				<h3 class="title">찜한 관광지(${fn:length(tpList)})</h3>
+				
+					<c:forEach var="e" items="${tpList}">
+						<div class="box">
+							<div class="clear">&nbsp;</div>
+							<div class="img_box">
+								<img
+									src="./resources/img/tourspot/${e.tTopImg}"
+									alt="" class="box_img"
+									onerror="this./resources/img/tourspot/${e.tTopImg};">
+							</div>
+							<div class="box_inner">
+								<div class="box_inner_bottom">
+									<img src="/res/map/marker/301_0.png" alt="" class="box_pin">
+									<div class="bottom_title"><a href="tourdetail?tNo=${e.tNo}">${e.tName}</a></div>
+									<div class="inner_bottom">
+										<!-- 찜하기 갯수 -->
+										<div class="clip_cnt">${e.tpicks}개</div>
+										<div class="inner_bottom_line">&nbsp;</div>
+										<!-- 좋아요 갯수 -->
+										<div class="rate_val">${e.tlikes}개</div>
+										<div class="clear"></div>
+									</div>
+									<div class="inner_bottom">
+										<div class="tag">${e.tType}</div>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
+					</c:forEach>
+				
+					
 				</div>
+				
 			</div>
+			</div>
+			
 		</div>
 		<!-- end content -->
 	</div>

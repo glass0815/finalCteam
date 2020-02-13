@@ -15,6 +15,58 @@
 	});
 </script>
 <!-- 지도 지도 지도 -->
+<!-- 로그인 체크 후 찜하기 및 좋아요 -->
+<script>
+	function loginCheck(uuid) {
+		if (uuid == '') {
+			if (confirm("로그인이 필요합니다. 로그인페이지로 이동하시겠습니까?") == true) {
+				location.href = "loginForm"
+			} else {
+				return;
+			}
+		}
+	}
+</script>
+<script>
+	function pick(tNo, val) {
+		var data = {
+			"tNo" : tNo,
+			"val" : val
+		}
+		$.ajax({
+			type : "GET",
+			data : data,
+			url : "tourlikepick",
+			success : function(data) {
+				if (data == 1) {
+					alert("이미 찜했습니다.", data);
+				} else {
+					alert("찜하기 성공", data)
+				}
+			}
+		})
+	}
+	function like(tNo, val) {
+		var data = {
+			"tNo" : tNo,
+			"val" : val
+		}
+		$.ajax({
+			type : "GET",
+			data : data,
+			url : "tourlikepick",
+			success : function(data) {
+				if (data == 1) {
+					alert("좋아요가 이미 되있습니다.", data);
+					location = 'tourdetail?tNo=' + tNo
+				} else {
+					alert("좋아요 성공", data)
+					location = 'tourdetail?tNo=' + tNo
+				}
+			}
+		})
+	}
+</script>
 
 
 <style>
@@ -117,10 +169,12 @@ ul {
 				<div class="portfolio_details">
 					<div class="details_section">
 						<h2>
-							<a>관광지명</a>
+							<a>${tvo.tName }</a>
 						</h2>
-						<h3>&nbsp;(관광지 종류)</h3>
-						기본정보
+						<br>
+						<h3>
+							&nbsp;&nbsp;관광지 유형 :<span>&nbsp;${tvo.tType}</span>
+						</h3>
 						<hr>
 						<ul>
 							<li class="version"><span><a href="#">
@@ -134,10 +188,9 @@ ul {
 										</div> <br>
 								</a></span></li>
 							<br>
-							<li class="update">주소 : <span><a href="#"></a> <a
-									href="#"></a></span></li>
+							<li class="update">주소 : <span>${tvo.tAddr1 }</span></li>
 
-							<li class="release">전화번호 : <span></span></li>
+							<li class="release">전화번호 : <span>${tvo.tTel}</span></li>
 						</ul>
 
 					</div>
@@ -146,11 +199,14 @@ ul {
 					<div class="">
 						<br>
 						<div style="margin-left: 10px; font-size: 0.5em;">
-							<i class="fa fa-text1 fa-3x"> 조회수 <a> 999</a></i>
-							&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-text2 fa-3x"> 좋아요 <a>
-									999</a></i>
+							<i class="fa fa-text1 fa-3x"> 조회수 <a> ${tvo.tHit}</a></i>
+							&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-text2 fa-3x"> 좋아요 <a
+								href="javascript:like(${tvo.tNo},1);"
+								onclick="return loginCheck('${sessionScope.uuId}')">${tvo.tlikes}</a></i>
 							<hr>
-							<a class="fa fa-text3 fa-3x">찜하기</a>
+							<a class="fa fa-text3 fa-3x"
+								href="javascript:pick(${tvo.tNo},2);"
+								onclick="return loginCheck('${sessionScope.uuId}')">찜하기</a>
 						</div>
 						<hr>
 						<ul>
@@ -187,7 +243,7 @@ ul {
 				var ps = new kakao.maps.services.Places();
 
 				// 키워드로 장소를 검색합니다
-				ps.keywordSearch('제주특별자치도 서귀포시 성산읍 성산리 114', placesSearchCB);
+				ps.keywordSearch('${tvo.tAddr1}', placesSearchCB);
 
 				// 키워드 검색 완료 시 호출되는 콜백함수 입니다
 				function placesSearchCB(data, status, pagination) {
@@ -234,7 +290,7 @@ ul {
 			</script>
 
 
-			<br> <br>
+			<br> <br> <br> <br>
 			<div class="tabbable servicetab tabs-left">
 				<ul class="nav nav-tabs"
 					style="margin-left: 10px; border-bottom: 2px solid #ddd; width: 1020px;">
@@ -246,28 +302,24 @@ ul {
 							class="fa fa-print"></i>활용방안</a></li>
 				</ul>
 				<div class="tab-content">
-					<div class="tab-pane active" id="webdesign">
+					<div class="tab-pane " id="webdevelopment">
 						<div class="row" style="padding-left: 100px">
 							<br>
 							<div class="col-lg-6">
-								<p>성산 일출봉(城山 日出峰)은 서귀포시 성산읍에 있는 산이다. 커다란 사발 모양의 분화구가 특징으로,
-									분화구 내부의 면적은 129,774m2이다. 높이는 182 m 이다. 성산 일출봉에서의 일출은 대한민국에서 가장
-									아름다운 해돋이로 꼽히며 영주십경 중 하나이다. 일출봉 분화구와 주변 1 km 해역이 2000년 7월 18일
-									대한민국의 천연기념물 제420호로 지정되었다. 또한 2007년 성산 일출봉 응회구의 1.688㎢가 세계자연유산으로
-									등재되었다. 해저에서 화산쇄설물로 이루어진 퇴적암이 구성된 상태에서 용암이 분출하여 만들어졌다. 수중에서 폭발로
-									이루어진 응회구로서 분석구보다 규모가 작으나 분화구가 크고 쇄설물 입자가 작다. 대략 10만년 전에 생겨났을
-									것으로 예상되고 2만년 전 이후에 본섬과 연결되었을 것으로 추정된다. 한라산의 360여 개 기생 화산 중 유일하게
-									해저에서 솟아오른 봉우리이다. 성산 일출봉은 원래는 독립된 화산체로서 사주가 형성되어 본섬과 연결된 육계도이다.
-
-									성산 일출봉에서 섭지코지에 이르는 해안은 제주도 최대의 만입이다. 강한 연안류는 성산일출봉과 섭지코지 사이에 성산
-									사빈과 사구를 발달시켰다.</p>
-
+								<c:forTokens var="e" items="${tvo.tInfo}" delims="/">
+									<p>${e}</p>
+								</c:forTokens>
 							</div>
 
 							<div class="col-lg-6">
-								<img class="img-responsive" src="resources/img/slider_01-1.png"
-									alt=""> <br> <img class="img-responsive"
-									src="resources/img/slider_01-1.png" alt="">
+								<img class="img-responsive"
+									src="resources/img/tourspot/${tvo.tImg1 }" alt=""> <br>
+								<img class="img-responsive"
+									src="resources/img/tourspot/${tvo.tImg2 }" alt=""> <br>
+								<img class="img-responsive"
+									src="resources/img/tourspot/${tvo.tImg3 }" alt=""> <br>
+								<img class="img-responsive"
+									src="resources/img/tourspot/${tvo.tImg4 }" alt="">
 
 							</div>
 						</div>
@@ -344,10 +396,63 @@ ul {
 						</div>
 					</div>
 
+						<div class="tab-pane active" id="webdesign">
+							<h5 class="title">
+								<i class="fa fa-laptop"></i>사진
+							</h5>
+							<div class="row"
+								style=" width: 100%; height: 600px;">
 
 
-					<div class="tab-pane" id="seoservices">
+								<div class="col-lg-8 col-md-8 col-sm-12"
+									style=" width: 50%; height: 300px; float: left; box-sizing: border-box">
+									<div class="item_image">
+										<div id="myCarousel" class="carousel slide">
+											<div class="carousel-inner">
+												<div class="item active">
+													<img src="resources/img/tourspot/${tvo.tImg1 }" alt=""
+														style="width: 100%; height: 300px;">
+												</div>
+												<!-- end item -->
+												<div class="item">
+													<img src="resources/img/tourspot/${tvo.tImg2 }" alt=""
+														style="width: 100%; height: 300px;">
+												</div>
+												<!-- end item -->
+												<div class="item">
+													<img src="resources/img/tourspot/${tvo.tImg3 }" alt=""
+														style="width: 100%; height: 300px;">
+												</div>
+												<div class="item">
+													<img src="resources/img/tourspot/${tvo.tImg4 }" alt=""
+														style="width: 100%; height: 300px;">
+												</div>
+												<!-- end item -->
+											</div>
+											<!-- carousel inner -->
+											<a class="left carousel-control" href="#myCarousel"
+												data-slide="prev"> <span class="icon-prev"></span>
+											</a> <a class="right carousel-control" href="#myCarousel"
+												data-slide="next"> <span class="icon-next"></span>
+											</a>
+										</div>
+										<!-- end carousel -->
+									</div>
+									<!-- end item_image -->
+								</div>
+								<div
+									style=" width: 45%; float: right; box-sizing: border-box">
 
+									<%-- <c:forTokens var="e" items="${tvo.tInfo}" delims="&">
+										<p>${e}</p>
+										<c:forTokens items="${e}" delims="/" var="f">
+											<a>${f }</a>
+										</c:forTokens>
+									</c:forTokens> --%>
+
+								</div>
+							</div>
+						</div>
 						<!-- end col-lg 8 -->
 
 						<div class="clearfix"></div>

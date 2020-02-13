@@ -1,31 +1,35 @@
 package kr.co.jejuolle.mvc.vo;
 
+import java.util.List;
+
 public class QuestionVO {
 	private int qnum;
-	private String uuId,uEmail,category,categoryname,utitle,qcontent,qdate;
+	private String uno,uEmail,categoryname,utitle,qcontent,qdate;
+	private String Qanswer;
+	
+	public String getQanswer() {
+		return Qanswer;
+	}
+	public void setQanswer(String qanswer) {
+		Qanswer = qanswer;
+	}
+	public void setUno(String uno) {
+		this.uno = uno;
+	}
 	public int getQnum() {
 		return qnum;
 	}
 	public void setQnum(int qnum) {
 		this.qnum = qnum;
 	}
-	public String getUuId() {
-		return uuId;
-	}
-	public void setUuId(String uuId) {
-		this.uuId = uuId;
+	public String getUno() {
+		return uno;
 	}
 	public String getuEmail() {
 		return uEmail;
 	}
 	public void setuEmail(String uEmail) {
 		this.uEmail = uEmail;
-	}
-	public String getCategory() {
-		return category;
-	}
-	public void setCategory(String category) {
-		this.category = category;
 	}
 	public String getCategoryname() {
 		return categoryname;

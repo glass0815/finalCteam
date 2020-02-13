@@ -6,6 +6,28 @@ public class RoomVO {
 	private String rName,rImg,rInfo;
 	private int rNo,hNo,rCount,rPrice,rPeople;
 	private List<ReservationVO> reservationVO;
+	private String startDate,endDate;
+	private int rvPeople;
+	
+	
+	public String getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+	public String getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+	public int getRvPeople() {
+		return rvPeople;
+	}
+	public void setRvPeople(int rvPeople) {
+		this.rvPeople = rvPeople;
+	}
 	public String getrName() {
 		return rName;
 	}

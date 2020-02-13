@@ -45,19 +45,122 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   		<result property="hName" column="hName"/>
   		<result property="hType" column="hType"/>
   		<result property="hTopImg" column="hTopImg"/>
+  		<result property="hlikes" column="hlikes"/>
+  		<result property="hpicks" column="hpicks"/>
+  		
   		<collection property="housePick" javaType="java.util.List"
   			resultMap="hpickResult" ofType="hpickvo"/>
   	</resultMap>
   	
   	<resultMap type="hpickvo" id="hpickResult">
   		<id property="hpNo" column="hpNo" javaType="int"/>
+  		<result property="hNo" column="hNo"/>
   		<result property="uNo" column="uNo"/>
   		<result property="hpDate" column="hpDate"/>
   	</resultMap>
   	
   	<select id="selectHousePick" parameterType="int" resultMap="houseResult">
-		select hp.hpno, hp.hno, h.hname, decode(h.hType,'a','호텔','b','모텔','c','캠핑','d','리조트') hType, 
-		h.htopimg, hp.uno, hp.hpdate 
-		from housepick hp, house h where hp.hno=h.hno and hp.uno=#{uNo} 
+  		select hp.hpno, hp.hno, h.hno, h.hname, decode(h.hType,'a','호텔','b','모텔','c','캠핑','d','리조트') hType, 
+			h.htopimg, hp.uno, hp.hpdate, h.hpicks, h.hlikes
+		from housepick hp, house h where hp.hno=h.hno and hp.uno=#{uNo}
 	</select>
+	
+	<!-- 찜한 여행지 리스트 -->
+	<resultMap type="trspotvo" id="tourResult">
+  		<id property="tNo" column="tNo" javaType="int" />
+  		<result property="tName" column="tName"/>
+  		<result property="tType" column="tType"/>
+  		<result property="tTopImg" column="tTopImg"/>
+  		<result property="tlikes" column="tlikes"/>
+  		<result property="tpicks" column="tpicks"/>
+  		
+  		<collection property="tourPick" javaType="java.util.List"
+  			resultMap="tpickResult" ofType="trpickvo"/>
+  	</resultMap>
+  	
+  	<resultMap type="trpickvo" id="tpickResult">
+  		<id property="tpNo" column="tpNo" javaType="int"/>
+  		<result property="tNo" column="tNo"/>
+  		<result property="uNo" column="uNo"/>
+  		<result property="tpDate" column="tpDate"/>
+  	</resultMap>
+  	
+  	<select id="selectTourPick" parameterType="int" resultMap="tourResult">
+  		select tp.tpno, tp.tno, t.tno, t.tname, decode(tType,'a','자연','b','문화','c','테마','d','올레') tType, 
+			t.ttopimg, tp.uno, tp.tpdate, t.tpicks, t.tlikes 
+		from tourpick tp, tourspot t where tp.tno=t.tno and tp.uno=#{uNo}
+	</select>
+		
+	<!-- 나의 관광지 리뷰 -->
+	<resultMap type="trreviewvo" id="trreviewResult">
+  		<id property="trNo" column="trno" javaType="int" />
+  		<result property="uNo" column="uno"/>
+  		<result property="trPoint" column="trpoint"/>
+  		<result property="trContent" column="trcontent"/>
+  		<result property="trDate" column="trdate"/>
+  		<result property="tName" column="tname"/>
+  		<result property="tTopImg" column="ttopimg"/>
+  		<result property="tNo" column="tno"/>
+  		
+  		<collection property="tourReview" javaType="java.util.List"
+  			resultMap="tResult" ofType="trspotvo"/>
+  	</resultMap>
+  	
+  	<resultMap type="trspotvo" id="tResult">
+  		<id property="tNo" column="tno" javaType="int"/>
+  		<result property="tName" column="tname"/>
+  		<result property="tTopImg" column="ttopimg"/>
+  	</resultMap>
+	
+  	<select id="selectMyTourReview" parameterType="int" resultMap="trreviewResult">
+  		select tr.trno, tr.tno, tr.uno, tr.trcontent, tr.trpoint, tr.trdate, t.tname, t.tno , t.ttopimg
+  			from tourreview tr, tourspot t where tr.tno=t.tno and tr.uno=#{uNo}
+	</select>
+	
+	<!-- 나의 숙소 리뷰 -->
+	<resultMap type="hreviewvo" id="hrreviewResult">
+  		<id property="hrNo" column="hrno" javaType="int" />
+  		<result property="uNo" column="uno"/>
+  		<result property="hrPoint" column="hrpoint"/>
+  		<result property="hrContent" column="hrcontent"/>
+  		<result property="hrDate" column="hrdate"/>
+  		<result property="hName" column="hname"/>
+  		<result property="hTopImg" column="htopimg"/>
+  		<result property="hNo" column="hno"/>
+  		
+  		<collection property="houseReview" javaType="java.util.List"
+  			resultMap="hResult" ofType="hvo"/>
+  	</resultMap>
+  	
+  	<resultMap type="hvo" id="hResult">
+  		<id property="hNo" column="hNo" javaType="int"/>
+  		<result property="hName" column="hname"/>
+  		<result property="hTopImg" column="htopimg"/>
+  	</resultMap>
+	
+  	<select id="selectMyHouseReivew" parameterType="int" resultMap="hrreviewResult">
+  		select hr.hrno, hr.hno, hr.uno, hr.hrcontent, hr.hrpoint, hr.hrdate, h.hno, h.hname, h.htopimg
+  		from housereview hr, house h where hr.hno=h.hno and hr.uno=#{uNo}
+	</select>
+	
+	<!-- 나의 문의 내역 --> 	
+	<select id="selectMyQuestion" parameterType="int" resultType="questionvo">
+  		select q.qnum, q.uno, q.uemail, q.categoryname,q.utitle, q.qcontent, q.qdate 
+		from question q where q.uno=#{uNo}
+	</select>
+	
+	<!-- 나의 문의 내역 삭제 -->
+	<delete id="deleteMyQuestion" parameterType="int">
+		delete from question where qnum=#{qnum}
+	</delete>
+	
+	<!-- 나의 관광지 리뷰 삭제 -->
+	<delete id="deleteTourReview" parameterType="int">
+		delete from tourreview where trno=#{trNo}
+	</delete>
+	
+	<!-- 나의 숙소 리뷰 삭제 -->
+	<delete id="deleteHouseReview" parameterType="int">
+		delete from housereview where hrno=#{hrNo}
+	</delete>
 </mapper>

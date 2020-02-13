@@ -1,8 +1,11 @@
 package kr.co.jejuolle.mvc.vo;
 
+import java.util.List;
+
 public class TourPickVO {
 	private int tpNo,tNo,uNo;
 	private String tpDate;
+	
 	public int getTpNo() {
 		return tpNo;
 	}
