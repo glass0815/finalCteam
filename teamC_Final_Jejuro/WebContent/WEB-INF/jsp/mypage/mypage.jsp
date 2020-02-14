@@ -55,6 +55,37 @@ div.mypageMenu.active>a{
 	color: #FF8C00;
 	
 }
+
+.input_todaydate{
+	width: 40%;
+	padding: 4px 10px;
+    text-align: center;
+    border-radius: 3px;
+    border: solid 1px #949698;
+}
+
+.input_date{
+	width: 80%;
+	padding: 4px 10px;
+    text-align: center;
+    border-radius: 3px;
+    border: solid 1px #949698;
+
+}
+
+.input_title{
+	width: 80%;
+	padding: 4px 10px;
+    border-radius: 3px;
+    border: solid 1px #949698;
+}
+
+.input_select{
+	padding: 4px 10px;
+    border-radius: 3px;
+    border: solid 1px #949698;
+}
+
 </style>
 <link href="resources/css/plan.css" rel="stylesheet">
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -64,7 +95,7 @@ div.mypageMenu.active>a{
 <script>
 	$(function() {
 		//오늘 날짜를 출력
-		$("#today").text(new Date().toLocaleDateString());
+		$("#today").val(new Date().toLocaleDateString());
 		//datepicker 한국어로 사용하기 위한 언어설정
 		$.datepicker.setDefaults($.datepicker.regional['ko']);
 
@@ -115,11 +146,11 @@ div.mypageMenu.active>a{
 			console.log("날짜 : " + diff)
 			console.log("날짜 : " + days)
 			//window.open('plan?num=' + days);
-			if(start != null & end != null){
-				location.href='plan?num=' + days;
+			/* if(start != null & end != null){
+				location.href='add_plan?num=' + days;
 			}else{
 				location.href='404';
-			}
+			} */
 		})
 	});
 </script>
@@ -173,55 +204,120 @@ div.mypageMenu.active>a{
 						</div>
 					</a>
 
-					<!-- 기본 모달 -->
+					<!-- 여행일정 추가 모달 -->
 					<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 						aria-labelledby="myModalLabel" aria-hidden="true">
 						<div class="modal-dialog">
-							<div class="modal-content">
+							<div class="modal-content" style="width:90%;">
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal">
 										<span aria-hidden="true">×</span><span class="sr-only">Close</span>
 									</button>
 									<h4 class="modal-title" id="myModalLabel"
-										style="text-align: center;">XXX님의 여행 일정</h4>
+										style="text-align: center;">여행 일정 추가</h4>
 								</div>
 								<div class="modal-body">
 									<div class="modal-div">
-										<form>
+										<form method="post" action="add_plan" id="add_plan" onsubmit="return addPlan();" autocomplete=off>
 											<table>
 												<tr>
-													<td>제목&nbsp;&nbsp;<input type="text"
-														placeholder="제목을 입력하세요." required="required"
-														style="width: 300px"></td>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
 												</tr>
+												
 												<tr>
-													<td>오늘 날짜 : <span id="today"></span> <br> <label
-														for="fromDate">시작일&nbsp;</label> <input type="text"
-														name="fromDate" id="fromDate">~ <label
-														for="toDate">종료일&nbsp;</label> <input type="text"
-														name="toDate" id="toDate"> <br>
+													<td colspan="1">
+														<label>제목 : </label>
+													</td>
+													<td colspan="7">
+														<input type="text" placeholder="제목을 입력하세요." class="input_title" name="mTitle"
+														required="required">
 													</td>
 												</tr>
+												<tr>
+													<td colspan="1">
+														<label>오늘 날짜 :</label>
+													</td>
+													<td colspan="5">
+														<input type="text" class="input_todaydate" id="today" disabled="disabled">
+													</td>
+													<td>
+													</td>
+													<td>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="1">
+														<label for="fromDate">시작일&nbsp;</label>&nbsp;
+													</td>
+													<td colspan="3">
+														<input type="text" class="input_date" name="startDate" id="fromDate">
+													</td>
+													<td colspan="1">
+														&nbsp; ~ &nbsp;
+													</td>
+														
+													
+													<td colspan="2">
+														<label for="toDate">종료일&nbsp;</label>&nbsp;
+													</td>
+													<td colspan="3">
+														<input type="text" class="input_date" name="endDate" id="toDate">
+													</td>
+												</tr>
+												
+												<tr>
+													<td colspan="1">
+														<label>인원 : </label>
+													</td>
+													<td colspan="2">
+														<select id="number" name="mPeople" class="small input_select"
+															aria-required="true" aria-invalid="false">
+															<option value="1">1명</option>
+															<option value="2">2명</option>
+															<option value="3">3명</option>
+															<option value="4">4명</option>
+															<option value="5">5명</option>
+															<option value="6">6명</option>
+															<option value="7">7명</option>
+															<option value="8">8명</option>
+															<option value="9">9명</option>
+															<option value="10">10명</option>
+														</select>
+													</td>
+													<td colspan="1">
+														<label>일행 : </label>
+													</td>
+													<td colspan="2">
+														<select id="partner"
+														name="mWith" class="small input_select" aria-required="true"
+														aria-invalid="false">
+															<option value="">선택</option>
+															<option value="a">부모</option>
+															<option value="b">아이</option>
+															<option value="c">친구</option>
+															<option value="d">커플</option>
+															<option value="e">혼자</option>
+														</select>
+														
+													</td>
+												</tr>
+												
+												<tr>
+													
+												</tr>
 											</table>
-											인원<select id="number" name="number" class="small"
-												aria-required="true" aria-invalid="false"><option
-													value="1">1명</option>
-												<option value="2">2명</option>
-												<option value="3">3명</option>
-												<option value="4">4명</option>
-												<option value="5">5명</option>
-												<option value="6">6명</option>
-												<option value="7">7명</option>
-												<option value="8">8명</option>
-												<option value="9">9명</option>
-												<option value="10">10명</option></select>&nbsp;일행<select id="partner"
-												name="partner" class="small" aria-required="true"
-												aria-invalid="false"><option value="">선택</option>
-												<option value="p1">부모</option>
-												<option value="p2">아이</option>
-												<option value="p3">친구</option>
-												<option value="p4">커플</option>
-												<option value="p5">혼자</option></select>&nbsp;여행테마 <select
+											
+												
+												
+												<input type="hidden" name="mTheme">
+												<input type="hidden" name="mStatus">
+												<!-- &nbsp;여행테마 <select
 												id="concept" name="concept" aria-required="true"
 												aria-invalid="false"><option value="">여행
 													구분을 선택하세요</option>
@@ -238,25 +334,28 @@ div.mypageMenu.active>a{
 													aria-invalid="false">공개&nbsp;&nbsp;<input
 													type="radio" name="publishyn" id="private" value="n"
 													aria-required="true" aria-invalid="false"> 비공개</li>
-											</ul>
+											</ul> -->
+											<div class="modal-footer">
+												<button type="button" id="button2" class="btn btn-default"
+													data-dismiss="modal">Close</button>
+												<button type="submit" id="button3" style="color: #696E7;"
+													class="btn btn-primary">Save</button>
+											</div>
+											
 										</form>
 									</div>
 								</div>
-								<div class="modal-footer">
-									<button type="button" id="button2" class="btn btn-default"
-										data-dismiss="modal">Close</button>
-									<button type="button" id="button3" style="color: #696E7;"
-										class="btn btn-primary">Save</button>
 								</div>
-
-
-
 							</div>
 						</div>
+						
 					</div>
 					<!-- end content -->
 				</div>
 				<!-- end container -->
+				</div>
+				</div>
+				
 </section>
 <!-- end section -->
 <script>

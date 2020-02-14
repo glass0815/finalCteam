@@ -92,6 +92,54 @@ ul에 . 안보이기 -->ul {
 	text-align: center;
 	vertical-align: top
 }
+
+.backlayer{ 
+	border-radius: 5px; 
+	margin-top: 10px; 
+
+	border-color: #949698;
+	background-color: #ffe7ca;
+	overflow-y: auto;
+}
+
+.modallayer{
+	border-radius: 5px;
+}
+
+.imgsize1{
+	width: 80%;
+}
+
+
+.atag{
+	color: #696E74;
+	font-size: medium;
+}
+
+.input_text{
+	padding: 4px 10px;
+    border-radius: 3px;
+    border: solid 1px #949698;
+}
+
+.tab { 
+	white-space: pre; 
+}
+
+.input_select{
+	padding: 4px 10px;
+    border-radius: 3px;
+    border: solid 1px #949698;
+}
+
+.data_list{
+	 padding-left: 1em; 
+	 padding-right: 1em;
+}
+
+.overflow{
+	overflow: hidden;
+}
 </style>
 
 <link rel="stylesheet"
@@ -171,16 +219,16 @@ ul에 . 안보이기 -->ul {
 			<div style="width: 350px; float: left;">
 				<!-- 여행정보 시작 -->
 				<h3>
-					<img alt="" id="plan"
+					<img alt="" id="plan" style="width: 12%"
 						src="resources/img/plan_icon/icons8-popular-man-50.png"><a>여행정보</a>
 				</h3>
-				<div
-					style="width: 300px; height: 310px; background: #FFE4B5; border-radius: 18px; margin-top: 10px; overflow-y: auto;">
+				<div class="backlayer"
+					style="width: 300px; height: 270px;">
 					<br>
 					<div class="tab-content">
 						<div class="tab-pane active" id="div1" ondrop="drop(event)"
 							ondragover="allowDrop(event)">
-							<ul>
+							<ul style="list-style:none;">
 								<li>
 									<div>
 										<img alt="" id="plan2"
@@ -216,13 +264,13 @@ ul에 . 안보이기 -->ul {
 											id="myinfo">일행&nbsp;&nbsp; </span><span>${plist.mWith}</span>
 									</div>
 								</li>
-								<li>
+								<%-- <li>
 									<div>
 										<img alt="" id="plan2"
 											src="resources/img/plan_icon/icons8-title-50.png"><span
 											id="myinfo">여행테마&nbsp;&nbsp; </span><span>${plist.mTheme}</span>
 									</div>
-								</li>
+								</li> --%>
 							</ul>
 						</div>
 					</div>
@@ -230,14 +278,14 @@ ul에 . 안보이기 -->ul {
 				<!-- 여행정보 끝-->
 				<!-- 내가예약한숙박 시작 -->
 				<h3>
-					<img alt="" id="plan"
+					<img alt="" id="plan" style="width: 12%"
 						src="resources/img/plan_icon/icons8-reception-50.png"><a>내가예약한숙박</a>
 				</h3>
-				<div
-					style="width: 300px; height: 230px; background: #FFF5EE; border-radius: 18px; margin-top: 10px; overflow-y: auto;">
+				<div class="backlayer"
+					style="width: 300px; height: 230px;">
 
 					<div class="tabbable">
-						<div class="tab-content">
+						<div class="tab-content data_list">
 							<div class="tab-pane active" id="recent">
 								<ul class="recent_posts">
 									<br>
@@ -257,15 +305,15 @@ ul에 . 안보이기 -->ul {
 				<!-- 내가예약한숙박 끝 -->
 				<!-- 내가찜한숙박 시작 -->
 				<h3>
-					<img alt="" id="plan"
+					<img alt="" id="plan" style="width: 12%"
 						src="resources/img/plan_icon/icons8-house-80.png"><a>내가찜한숙박</a>
 				</h3>
-				<div
-					style="width: 300px; height: 300px; background: #FFF5EE; border-radius: 18px; margin-top: 10px; overflow-y: auto;">
+				<div class="backlayer"
+					style="width: 300px; height: 300px;">
 
 					<div class="tabbable">
 						<br>
-						<div class="tab-content">
+						<div class="tab-content data_list">
 							<div class="tab-pane active" id="recent2">
 								<ul class="recent_posts">
 								<c:forEach var="e" items="${hplist }">
@@ -281,125 +329,240 @@ ul에 . 안보이기 -->ul {
 					</div>
 				</div>
 				<!-- 내가찜한숙박 끝 -->
-				<div
-					style="width: 300px; height: 150px; background: #FFF5EE; border-radius: 18px; margin-top: 10px;">
-					<div class="tabbable">
-						<div class="w3-container">
-							<h3>
-								<button
-									onclick="document.getElementById('id01').style.display='block'"
-									class="w3-button">
-									<img alt="" id="plan"
-										src="resources/img/plan_icon/icons8-money-80.png">
-								</button>
-								<a>여행가계부</a>
-							</h3>
-							<div id="id01" class="w3-modal">
-							<form action="add_money" method="post">
-								<div class="w3-modal-content"
-									style="width: 360px; height: 375px;">
-									<header class="w3-container w3-teal">
-										<span
-											onclick="document.getElementById('id01').style.display='none'"
-											class="w3-button w3-display-topright">&times;</span>
-										<h2>가계부</h2>
-									</header>
-									<div class="w3-container">
-										<br>
-										<table>
-											<tr>
-												<td><img alt="" id="plan2"
-													src="resources/img/plan_icon/icons8-airplane-take-off-50.png">항공기</td>
-												<td><input type="text" id="" name="airplane"></td>
-											</tr>
-											<tr>
-												<td><img alt="" id="plan2"
-													src="resources/img/plan_icon/icons8-transportation-50.png">교통</td>
-												<td><input type="text" id="" name="transportaion"></td>
-											</tr>
-											<tr>
-												<td><img alt="" id="plan2"
-													src="resources/img/plan_icon/icons8-hotel-50.png">숙소예약</td>
-												<td><input type="text" id="" name="reser"></td>
-											</tr>
-											<tr>
-												<td><img alt="" id="plan2"
-													src="resources/img/plan_icon/icons8-street-food-50.png">음식</td>
-												<td><input type="text" id="" name="food"></td>
-											</tr>
-											<tr>
-												<td><img alt="" id="plan2"
-													src="resources/img/plan_icon/icons8-ticket-64.png">입장료</td>
-												<td><input type="text" id="" name="tiket"></td>
-											</tr>
-											<tr>
-												<td><img alt="" id="plan2"
-													src="resources/img/plan_icon/icons8-inscription-50.png">기타</td>
-												<td><input type="text" id="" name="etc"></td>
-											</tr>
-										</table>
-									</div>
-									<footer class="w3-container w3-teal" style="height: 40px;">
-										<input type="submit" value="등록" class="btn btn-primary"
-											style="float: right; background-color: black; margin-top: 2px;" />
-									</footer>
-									
-								</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
+				
+				<!-- 교통 가계부 끝 -->
 			</div>
 
 			<!-- 여행정보, 숙박 div 끝-->
 
 			<!-- 검색, 관광지 div 시작 -->
-			<div style="width: 350px; float: left;">
-				<!-- 통합검색 시작 -->
-				<h3>
-					<img alt="" id="plan"
-						src="resources/img/plan_icon/icons8-search-64.png"><a>통합
-						검색</a>
-				</h3>
-				<div
-					style="width: 300px; height: 300px; background: #FFF5EE; border-radius: 18px; margin-top: 10px; overflow-y: auto;">
-					<br>
-					<div class="plan_info_box nleft">
-						<div class="info_select">
-							<input type="text" class="" placeholder="검색하세요"
-								style="width: 80%; margin-left: 20px;" id="total_budget_amount">
-						</div>
-						<br>
-					</div>
-					<div class="tab-content">
-						<div class="tab-pane active" id="div1" ondrop="drop(event)"
-							ondragover="allowDrop(event)">
-							<ul class="recent_posts">
-								<li><a href="#" draggable="true" ondragstart="drag(event)"
-									id="drag5"> 숙소이름<span class="close">&times;</span></a><img src="resources/img/recent_post_01.png"
-									alt="" id="plan" /></li>
-								<hr>
-								<li><a href="#" draggable="true" ondragstart="drag(event)"
-									id="drag6"> 관광지이름<span class="close">&times;</span></a><img
-									src="resources/img/recent_post_02.png" alt="" id="plan" /></li>
-								<hr>
-							</ul>
+			<div style="width: 350px; float: left; margin-top: 9%;">
+				<!-- 여행 가계부 시작 -->
+				<button class="backlayer w3-button imgsize1" onclick="document.getElementById('account').style.display='block'" 
+					style="width: 150px; height: 150px; background-color: #e0e0e0; margin-bottom: auto;">
+					<div class="tabbable">
+						<div class="w3-container"> 
+							<img alt="" id="plan" src="resources/img/plan_icon/icons8-money-80.png" style="width: 60px;">
+								<h3>가계부</h3>
 						</div>
 					</div>
+				</button>
+				<!-- 교통 시작 -->
+				<button class="backlayer w3-button imgsize1" onclick="document.getElementById('transport').style.display='block'"			
+					style="width: 150px; height: 150px; background-color: #e0e0e0; margin-bottom: auto;"">
+					<div class="tabbable">
+						<div class="w3-container"> 
+							<img alt="" id="plan"
+									src="resources/img/plan_icon/icons8-transportation-50.png">
+							<h3>교통</h3> 
+						</div>
+					</div>
+				</button>
+				<!-- 검색 시작 -->
+				<button class="backlayer w3-button imgsize1" onclick="document.getElementById('integrated_search').style.display='block'"			
+					style="width: 300px; height: 110px; margin-top: 5px; background-color: #e0e0e0;">
+					<div class="tabbable">
+						<div class="w3-container">  
+							<h3 style="margin:5px 0;">
+								<img alt="" id="plan"
+									src="resources/img/plan_icon/icons8-search-64.png">
+								통합검색
+							</h3> 
+						</div>
+					</div>
+				</button>
+				
+				<!-- 교통 모달 시작 -->
+				<div id="transport" class="w3-modal" style="padding-top:10%;">
+				<form action="add_money" method="post">
+					<div class="w3-modal-content modallayer"
+						style="width: 20%; height: 35%;">
+						<header class="w3-container">
+							<span
+								onclick="document.getElementById('transport').style.display='none'"
+								class="w3-button w3-display-topright">&times;</span>
+							<h2>교통</h2>
+						</header>
+						<div class="w3-container">
+							<input type="hidden" name="mNo" value="">
+							<table>
+								<tr>
+									<td colspan="3"><h5>출발지</h5><input class="input_text" type="text" id="" name="startSpot"></td>
+								
+									<td colspan="3"><h5>도착지</h5><input class="input_text" type="text" id="" name="endSpot"></td>
+								</tr>
+								<tr>
+									<td colspan="7"><h5>교통수단</h5>
+										<input type="radio" id="car" name="car" value="자동차"><a class="atag">자동차</a><span class="tab">&#9;</span>
+									
+										<input type="radio" id="bus" name="bus" value="버스"><a class="atag">버스</a><span class="tab">&#9;&#9;</span>
+									
+										<input type="radio" id="subway" name="subway" value="지하철"><a class="atag">지하철</a><span class="tab">&#9;&#9;</span>
+									
+										<input type="radio" id="train" name="train" value="기차"><a class="atag">기차</a><span class="tab">&#9;&#9;</span>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="4">
+										<input type="radio" id="boat" name="boat" value="배"><a class="atag">배</a><span class="tab">&#9;&#9;</span>
+									
+										<input type="radio" id="airplane" name="airplane" value="비행기"><a class="atag">비행기</a><span class="tab">&#9;</span>
+								
+										<input type="radio" id="walk" name="walk" value="도보"><a class="atag">도보</a><span class="tab">&#9;</span>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<h5>출발 날짜</h5>
+										<select id="number" name="number" class="small input_select"
+												aria-required="true" aria-invalid="false">
+												<option value="1">1일차</option>
+												<option value="2">2일차</option>
+												<option value="3">3일차</option>
+												<option value="4">4일차</option>
+												<option value="5">5일차</option>
+												<option value="6">6일차</option>
+												<option value="7">7일차</option>
+												<option value="8">8일차</option>
+												<option value="9">9일차</option>
+												<option value="10">10일차</option>
+										</select>
+									</td>
+									<td colspan="4"><h5>출발 시간</h5><input class="input_text" type="text" id="" name="tsTime"></td>
+								</tr>
+								<tr>
+									<td colspan="6"><h5>메모</h5><textarea class="input_text" name="tsContent" rows="3" cols="45"></textarea>
+								</tr>
+								
+							</table>
+						</div>
+						<footer class="w3-container">
+							<input type="submit" value="등록" class="btn btn-primary"
+								style="float: right; background-color: black; margin-bottom: 1em;" />
+						</footer>
+						
+					</div>
+					</form>
 				</div>
-				<!-- 통합검색 끝 -->
+				<!-- 교통 모달 끝 -->
+				
+				<!-- 여행가계부 모달 시작 -->
+				<div id="account" class="w3-modal" style="padding-top:10%;">
+				<form action="add_money" method="post">
+					<div class="w3-modal-content modallayer"
+						style="width: 18%; height: 60%;">
+						<header class="w3-container">
+							<span
+								onclick="document.getElementById('account').style.display='none'"
+								class="w3-button w3-display-topright">&times;</span>
+							<h2>가계부</h2>
+						</header>
+						<div class="w3-container">
+							<table>
+								<tr>
+									<td><img alt="" id="plan2"
+										src="resources/img/plan_icon/icons8-airplane-take-off-50.png"><b>항공기</b><span class="tab">&#9;</span></td>
+									<td><input type="text" class="input_text" id="" name="airplane"></td>
+								</tr>
+								<tr>
+									<td><img alt="" id="plan2"
+										src="resources/img/plan_icon/icons8-transportation-50.png"><b>교통</b><span class="tab">&#9;</span></td>
+									<td><input type="text" class="input_text" id="" name="transportaion"></td>
+								</tr>
+								<tr>
+									<td><img alt="" id="plan2"
+										src="resources/img/plan_icon/icons8-hotel-50.png"><b>숙소예약</b><span class="tab">&#9;</span></td>
+									<td><input type="text" class="input_text" id="" name="reser"></td>
+								</tr>
+								<tr>
+									<td><img alt="" id="plan2"
+										src="resources/img/plan_icon/icons8-street-food-50.png"><b>음식</b><span class="tab">&#9;</span></td>
+									<td><input type="text" class="input_text" id="" name="food"></td>
+								</tr>
+								<tr>
+									<td><img alt="" id="plan2"
+										src="resources/img/plan_icon/icons8-ticket-64.png"><b>입장료</b><span class="tab">&#9;</span></td>
+									<td><input type="text" class="input_text" id="" name="tiket"></td>
+								</tr>
+								<tr>
+									<td><img alt="" id="plan2"
+										src="resources/img/plan_icon/icons8-inscription-50.png"><b>기타</b><span class="tab">&#9;</span></td>
+									<td><input type="text" class="input_text" id="" name="etc"></td>
+								</tr>
+							</table>
+						</div>
+						<footer class="w3-container" style="padding-bottom: 1em;">
+							<input type="submit" value="등록" class="btn btn-primary"
+								style="float: right; background-color: black; margin-top: 2px;"  />
+						</footer>
+						
+					</div>
+					</form>
+				</div>
+				<!-- 여행가계부 모달 끝 -->
+				
+				<!-- 통합검색 모달 시작 -->
+				<div id="integrated_search" class="w3-modal" style="padding-top:10%;">
+				<form action="add_money" method="post">
+					<div class="w3-modal-content modallayer"
+						style="width: 18%; height: 60%;">
+						<header class="w3-container">
+							<span
+								onclick="document.getElementById('integrated_search').style.display='none'"
+								class="w3-button w3-display-topright">&times;</span>
+							<h2>통합 검색</h2>
+						</header>
+						<div class="w3-container">
+							<div class="plan_info_box nleft">
+								<div class="info_select">
+									<b>검색</b><input type="text" class="input_text" placeholder="검색어를 입력하세요."
+										style="width: 80%; margin-left: 20px;" id="total_budget_amount">
+								</div>
+								<br>
+							</div>
+							<div class="tab-content data_list">
+							<div class="tab-pane active" id="div1" ondrop="drop(event)"
+								ondragover="allowDrop(event)">
+								<ul class="recent_posts">
+									<li>
+										<a href="#" id="drag5"> 숙소이름</a>
+										<img src="resources/img/recent_post_01.png" alt="" id="plan" />
+										<input type="submit" value="찜하기" class="btn btn-primary"
+											style="float: right; background-color: black; margin-top: 2em;" />
+									</li>
+									<hr>
+									<li>
+										<a href="#" id="drag6"> 관광지이름</a>
+										<img src="resources/img/recent_post_02.png" alt="" id="plan" />
+										<input type="submit" value="찜하기" class="btn btn-warning"
+											style="float: right; background-color: black; margin-top: 2em;" />
+									</li>
+									<hr>
+								</ul>
+							</div>
+						</div>
+						</div>
+						<footer class="w3-container" style="padding-bottom: 1em;">
+							<input type="submit" value="등록" class="btn btn-primary"
+								style="float: right; background-color: black; margin-top: 2px;"  />
+						</footer>
+						
+					</div>
+					</form>
+				</div>
+				<!-- 통합검색 모달 끝 -->
+				
 				<!-- 내가찜한관광지 시작 -->
 				<h3>
-					<img alt="" id="plan"
+					<img alt="" id="plan" style="width: 42px;"
 						src="resources/img/plan_icon/icons8-camper-80.png"><a>내가찜한관광지</a>
 				</h3>
-				<div
-					style="width: 300px; height: 942px; background: #FFF5EE; border-radius: 18px; margin-top: 10px; overflow-y: scroll;">
+				<div class="backlayer"
+					style="width: 300px; height: 500px; overflow-y: scroll;">
 
 					<div class="tabbable">
 						<br>
-						<div class="tab-content">
+						<div class="tab-content data_list">
 							<div class="tab-pane active" id="recent2">
 								<ul class="recent_posts">
 									<c:forEach var="e" items="${ tplist}">
@@ -424,11 +587,11 @@ ul에 . 안보이기 -->ul {
 		<div style="width: 780px; height: 1480px; float: left;">
 			<!-- 지도API -->
 			<h3>
-				<img alt="" id="plan"
+				<img alt="" id="plan" style="width: 42px;"
 					src="resources/img/plan_icon/icons8-map-marker-64.png"><a>지도</a>
 			</h3>
 			<div id="map"
-				style="width: 750px; height: 350px; background-color: skyblue; margin-top: 10px;">
+				style="width: 700px; height: 325px; background-color: skyblue; margin-top: 10px;">
 				<script type="text/javascript"
 					src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8b2b3fa7a88682f73a72b57b119c70c3"></script>
 				<script>
@@ -483,15 +646,15 @@ ul에 . 안보이기 -->ul {
 			<!-- 지도API -->
 			<!-- 일정표 시작 -->
 			<h3>
-				<img alt="" id="plan"
+				<img alt="" id="plan" style="width: 42px;" 
 					src="resources/img/plan_icon/icons8-schedule-50.png"><a>일정표</a>
 			</h3>
-			<div style="width: 750px; height: 940px; margin-top: 10px;">
+			<%-- <div style="width: 750px; height: 940px; margin-top: 10px;">
 				<%
 					int num1 = Integer.parseInt(request.getParameter("num"));
 				%>
-				<table class="tg" border="1"
-					style="table-layout: fixed; width: 750px; height: 910px; border: 1px solid;">
+				<table class="tg" border="1" 
+					style="table-layout: fixed; width: 750px; height: 910px; border: 1px solid; border-radius: 5px; ">
 					<tr>
 						<th class="tg-ruqc" style="width: 130px">시간</th>
 						<%
@@ -502,6 +665,7 @@ ul에 . 안보이기 -->ul {
 							}
 						%>
 					</tr>
+					<!-- 행 만들기 -->
 					<%
 						for (int j = 5; j <= 23; j++) {
 					%>
@@ -521,15 +685,66 @@ ul에 . 안보이기 -->ul {
 					%>
 				</table>
 			</div>
-			<!-- 일정표 시작 -->
+			<!-- 일정표 시작 --> --%>
+			
+			<div style="width: 700px; height: 940px; margin-top: 10px;">
+				<table class='tg overflow' border="1" style='margin: auto; table-layout: fixed; width: 700px; height: 900px; border: 1px solid; '>
+					<thead>
+						<tr>
+							<th class="tg-ruqc" style="width: 130px">시간</th>
+							<c:forEach var="i" begin="1" end="${day + 1}" step="1">
+								<th class="tg-jiqj">${i}일차</th>
+							</c:forEach>
+					</thead>
+					<tbody>
+						<!-- 행 출력 -->
+						<c:forEach begin="5" end="23" step="1" var="i">
+							<tr>
+								<td class="tg-6888">${i}:00</td>
+								<c:forEach begin="0" end="${day }" step="1">
+									<td class='tg-ii8n' id="div2" ondrop="drop(event)"
+										ondragover="allowDrop(event)"></td>
+								</c:forEach>
+							</tr>
+						</c:forEach>
+						
+					</tbody>
+				</table>
+			
+			</div>
+			
 		</div>
 		<!-- 지도, 일정표 div 끝 -->
 	</div>
 	<!-- 제일 큰 div 끝-->
 	<div style="text-align: center;">
-		<input class="button small" type="button" value="취소"> <input
-			class="button small" type="button" value="저장">
+		<input class="button large" type="button" value="취소" style="width: 10%;"> 
+		<span class="tab">&#9;</span>
+		<input class="button large" type="button" value="저장" style="width: 10%;">
+		<div style="margin-bottom: 2em;"></div>
 	</div>
 </div>
+
+<!-- 버튼 클릭시 플랜리스트의 컬럼이 추가되는 스크립트 -->
+<!-- <script type="text/javascript">
+    init.push(function () {
+        
+        $(".mCol-add").click(function() {
+            var trlength = $('.idcMap > tbody > tr').length;
+            for(var i=0; i<trlength; i++) {
+                var t = $('.idcMap > tbody > tr').eq(i);
+                t.append('<td class="bordered" style="width: 100px;"></td>')
+            }
+        });
+        $(".mCol-del").click(function() {
+            var trlength = $('.idcMap > tbody > tr').length;
+            for(var i=0; i<trlength; i++) {
+                var t = $('.idcMap > tbody > tr').eq(i);
+                t.children().last().remove();
+            }
+        });
+    })
+</script> -->
+
 <!-- end section -->
 <%@include file="../main/footer.jsp"%>

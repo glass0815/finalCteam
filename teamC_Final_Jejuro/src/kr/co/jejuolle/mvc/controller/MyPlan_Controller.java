@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.jejuolle.mvc.dao.MyPlan_Inter;
 import kr.co.jejuolle.mvc.vo.HouseVO;
@@ -25,8 +26,10 @@ public class MyPlan_Controller {
 	@Autowired
 	private MyPlan_Inter myPlan_Inter;
 
+	// 플랜 작성페이지로 이동
 	@RequestMapping("/add_plan")
 	public String addPlan(MyplanVO vo, HttpSession session) throws ParseException {
+		
 		int uno = (int) session.getAttribute("uNo");
 		vo.setuNo(uno);
 
@@ -48,35 +51,51 @@ public class MyPlan_Controller {
 		// 이제 24*60*60*1000(각 시간값에 따른 차이점) 을 나눠주면 일수가 나온다.
 		long day = calDate / (24 * 60 * 60 * 1000);
 
-		day = Math.abs(day) + 1;
-
+		day = Math.abs(day);
+		
 		return "redirect:list_plan?num=" + day;
 	}
 
+	
 	@RequestMapping("/list_plan")
-	public String listPlan(Model m, HttpSession session) {
-		
+	public ModelAndView listPlan(HttpSession session, long num) {
+		ModelAndView mav = new ModelAndView("mypage/plan");
 		int uNo = (int) session.getAttribute("uNo");
 		System.out.println(uNo);
 
 		MyplanVO vo = myPlan_Inter.view_myPlan(uNo);
 		session.setAttribute("mNo", vo.getmNo());
 		System.out.println("what : "+session.getAttribute("mNo"));
-		m.addAttribute("plist", vo);
+		mav.addObject("plist", vo);
 
 		List<HouseVO> list = myPlan_Inter.house_pick(uNo);
-		m.addAttribute("hplist", list);
+		mav.addObject("hplist", list);
 
 		List<TourSpotVO> list2 = myPlan_Inter.tour_pick(uNo);
-		m.addAttribute("tplist", list2);
+		mav.addObject("tplist", list2);
 		
 		List<HouseVO> list3 = myPlan_Inter.house_res(uNo);
-		m.addAttribute("rlist", list3);
-
-		return "mypage/plan";
+		mav.addObject("rlist", list3);
+		
+		mav.addObject("day", num); 
+		//System.out.println("일 수 : "+day);
+		
+		return mav;
 	}
+	
+	// 가계부
 	@RequestMapping("/add_money")
 	public String add_money(PlanMoneyVO vo, HttpSession session) {
+		int mNo = (int) session.getAttribute("mNo");
+		System.out.println("mNo :"+mNo);
+		vo.setmNo(mNo);
+		myPlan_Inter.add_planMoney(vo);
+		return "mypage/plan";
+	}
+	
+	// 교통
+	@RequestMapping("/add_trasport")
+	public String add_trasport(PlanMoneyVO vo, HttpSession session) {
 		int mNo = (int) session.getAttribute("mNo");
 		System.out.println("mNo :"+mNo);
 		vo.setmNo(mNo);

@@ -149,8 +149,6 @@ public class MyPage_Controller {
 		return "redirect:myReview?uno="+uno;
 	}
 	
-	
-
 	// 여행일정추가
 	@RequestMapping("/plan")
 	public String plan() {
